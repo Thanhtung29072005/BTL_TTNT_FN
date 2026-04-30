@@ -45,3 +45,31 @@ def visualize_results(y_true, y_pred, title="Phân phối Giá thực tế vs Gi
     plt.title(title)
     plt.legend()
     plt.show()
+
+def plot_loss_curve(loss_history, title="Loss Curve"):
+    plt.figure(figsize=(8, 5))
+    plt.plot(loss_history, label='Training Loss', color='red')
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.title(title)
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def plot_scatter(y_true, y_pred, title="Scatter Plot: Thực tế vs Dự đoán"):
+    plt.figure(figsize=(8, 5))
+    y_true_arr = np.asarray(y_true).flatten()
+    y_pred_arr = np.asarray(y_pred).flatten()
+    
+    plt.scatter(y_true_arr, y_pred_arr, alpha=0.5, color='blue')
+    
+    max_val = max(np.max(y_true_arr), np.max(y_pred_arr))
+    min_val = min(np.min(y_true_arr), np.min(y_pred_arr))
+    plt.plot([min_val, max_val], [min_val, max_val], color='red', linestyle='--', linewidth=2, label='Đường y=x')
+    
+    plt.xlabel("Giá thực tế (triệu đồng/m2)")
+    plt.ylabel("Giá dự đoán (triệu đồng/m2)")
+    plt.title(title)
+    plt.legend()
+    plt.grid(True)
+    plt.show()

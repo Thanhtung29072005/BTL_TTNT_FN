@@ -6,7 +6,7 @@ from sklearn.linear_model import LinearRegression
 # Import từ các module vừa tạo
 from data_processing import load_data, preprocess_data, prepare_training_data, report_column_quality
 
-from evaluation import evaluate, evaluate_classification, visualize_results
+from evaluation import evaluate, evaluate_classification, visualize_results, plot_loss_curve, plot_scatter
 from model import CustomLinearRegression, CustomLogisticRegression
 warnings.filterwarnings('ignore')
 
@@ -77,6 +77,9 @@ def main():
 
     # 5. Trực quan hóa
     print("\nĐang hiển thị biểu đồ... (Hãy tắt cửa sổ biểu đồ để kết thúc chương trình)")
+    plot_loss_curve(custom_model.loss_history, "Loss Curve - Custom Linear Regression")
+    plot_loss_curve(logistic_custom.loss_history, "Loss Curve - Custom Logistic Regression")
+    plot_scatter(y_test_raw.values, y_pred_custom, "Scatter Plot: Thực tế vs Dự đoán (Custom Linear Regression)")
     visualize_results(y_test_raw.values, y_pred_custom, "Gia thuc te vs Gia du doan (Custom Linear Regression)")
 
 if __name__ == "__main__":
