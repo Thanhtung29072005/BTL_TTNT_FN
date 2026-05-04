@@ -9,6 +9,7 @@ class CustomLinearRegression:
         self.w = None
         self.b = None
         self.loss_history = []
+        self.r2_history = []
         
     def fit(self, X, y):
         n_samples, n_features = X.shape
@@ -41,8 +42,13 @@ class CustomLinearRegression:
                 print(f"Custom Model: Dừng sớm tại vòng lặp {epoch} do loss đã hội tụ.")
                 break
                 
-            if epoch % 500 == 0:
-                print(f"Epoch {epoch:4d}: Loss = {loss:.4f}")
+            if epoch % 200 == 0:
+                # Tính R2 score đơn giản trên tập huấn luyện để theo dõi "độ chính xác"
+                ss_res = np.sum((y - y_pred) ** 2)
+                ss_tot = np.sum((y - np.mean(y)) ** 2)
+                r2 = 1 - (ss_res / ss_tot) if ss_tot != 0 else 0
+                self.r2_history.append(r2)
+                print(f"Epoch {epoch:4d}: Loss = {loss:.4f} | R2 = {r2:.4f}")
                 
     def predict(self, X):
         return np.dot(X, self.w) + self.b
@@ -56,6 +62,7 @@ class CustomLogisticRegression:
         self.w = None
         self.b = None
         self.loss_history = []
+        self.accuracy_history = []
         
     def _sigmoid(self, z):
         # np.clip để tránh overflow trong hàm exp
@@ -100,8 +107,12 @@ class CustomLogisticRegression:
                 print(f"Logistic Model: Dừng sớm tại vòng lặp {epoch} do loss đã hội tụ.")
                 break
                 
-            if epoch % 500 == 0:
-                print(f"Epoch {epoch:4d}: Loss = {loss:.4f}")
+            if epoch % 200 == 0:
+                # Tính Accuracy trên tập huấn luyện
+                y_pred_cls = (y_predicted > 0.5).astype(int)
+                acc = np.mean(y_pred_cls == y)
+                self.accuracy_history.append(acc)
+                print(f"Epoch {epoch:4d}: Loss = {loss:.4f} | Acc = {acc:.4f}")
 
     def predict_proba(self, X):
         linear_model = np.dot(X, self.w) + self.b

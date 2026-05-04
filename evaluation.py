@@ -46,11 +46,12 @@ def visualize_results(y_true, y_pred, title="Phân phối Giá thực tế vs Gi
     plt.legend()
     plt.show()
 
-def plot_loss_curve(loss_history, title="Loss Curve"):
+def plot_loss_curve(history, title="Loss Curve"):
     plt.figure(figsize=(8, 5))
-    plt.plot(loss_history, label='Training Loss', color='red')
-    plt.xlabel("Epochs")
-    plt.ylabel("Loss")
+    metric_name = "Loss" if "Loss" in title else ("R2 Score" if "R2" in title else "Accuracy")
+    plt.plot(history, label=f'Training {metric_name}', color='red' if "Loss" in title else 'blue')
+    plt.xlabel("Epochs (x500)" if metric_name != "Loss" else "Epochs")
+    plt.ylabel(metric_name)
     plt.title(title)
     plt.legend()
     plt.grid(True)

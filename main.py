@@ -78,7 +78,10 @@ def main():
     # 5. Trực quan hóa
     print("\nĐang hiển thị biểu đồ... (Hãy tắt cửa sổ biểu đồ để kết thúc chương trình)")
     plot_loss_curve(custom_model.loss_history, "Loss Curve - Custom Linear Regression")
+    plot_loss_curve(custom_model.r2_history, "R2 Score Curve - Custom Linear Regression")
+    
     plot_loss_curve(logistic_custom.loss_history, "Loss Curve - Custom Logistic Regression")
+    plot_loss_curve(logistic_custom.accuracy_history, "Accuracy Curve - Custom Logistic Regression")
     plot_scatter(y_test_raw.values, y_pred_custom, "Scatter Plot: Thực tế vs Dự đoán (Custom Linear Regression)")
     visualize_results(y_test_raw.values, y_pred_custom, "Gia thuc te vs Gia du doan (Custom Linear Regression)")
 
